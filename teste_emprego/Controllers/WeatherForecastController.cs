@@ -1,11 +1,15 @@
 using Microsoft.AspNetCore.Mvc;
+using teste_emprego.DAO;
+using teste_emprego.Model;
 
 namespace teste_emprego.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class WeatherForecastController : ControllerBase
     {
+
+        
         private static readonly string[] Summaries = new[]
         {
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -21,6 +25,8 @@ namespace teste_emprego.Controllers
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
+            var con = new Conexao();
+            con.testeConexao();
             return Enumerable.Range(1, 100).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),

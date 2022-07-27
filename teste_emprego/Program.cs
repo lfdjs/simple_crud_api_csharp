@@ -1,4 +1,8 @@
+
+
 var builder = WebApplication.CreateBuilder(args);
+var con = new teste_emprego.DAO.Conexao();
+
 
 // Add services to the container.
 
@@ -16,6 +20,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+var status = con.testeConexao();
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
@@ -23,3 +29,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+
+

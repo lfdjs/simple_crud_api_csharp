@@ -1,4 +1,4 @@
-namespace teste_emprego
+namespace teste_emprego.Model
 {
     public class WeatherForecast
     {
