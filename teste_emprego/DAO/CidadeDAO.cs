@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using System.Data.SqlClient;
 using teste_emprego.Model;
 
@@ -69,7 +70,63 @@ namespace teste_emprego.DAO
             }
             catch (Exception erro)
             {
+                throw erro;
+            }
+            finally
+            {
+                desconectar();
+            }
+           
+        }
 
+        public void AlterarCidade(Cidade cidade)
+        {
+            sql = "UPDATE cidade SET nome = @nome WHERE id = @id";
+            try
+            {
+                if (conectar())
+                {
+
+                    using (SqlCommand cmd = new(sql, conexao))
+                    {
+                        cmd.CommandType = CommandType.Text;
+                        cmd.Parameters.AddWithValue("@nome", cidade.nome);
+                        cmd.Parameters.AddWithValue("@id", cidade.id);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                }
+            }
+            catch (Exception erro)
+            {
+                throw erro;
+            }
+            finally
+            {
+                desconectar();
+            }
+        }
+
+        public void DeletarCidade(Cidade cidade)
+        {
+            sql = "DELETE FROM cidade WHERE id = @id";
+            try
+            {
+                if (conectar())
+                {
+
+                    using (SqlCommand cmd = new(sql, conexao))
+                    {
+                        cmd.CommandType = CommandType.Text;
+                        
+                        cmd.Parameters.AddWithValue("@id", cidade.id);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                }
+            }
+            catch (Exception erro)
+            {
                 throw erro;
             }
             finally

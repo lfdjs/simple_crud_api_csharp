@@ -21,5 +21,15 @@ namespace teste_emprego.Repositorio
         public void InserirCidade(Cidade cidade) {
             _cidadeDAO.InserirCidade(cidade);
         }
+        public void AlterarCidade(Cidade cidade)
+        {
+            _cidadeDAO.AlterarCidade(cidade);
+        }
+
+        public void DeletarCidade(Cidade cidade)
+        {
+            _cidadeDAO.DeletarCidade(cidade);
+        }
+
     }
 }

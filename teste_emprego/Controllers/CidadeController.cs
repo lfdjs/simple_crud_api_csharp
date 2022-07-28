@@ -19,9 +19,16 @@ namespace teste_emprego.Controllers
 
         // GET: api/<CidadeController>
         [HttpGet]
-        public IEnumerable<Cidade> Get()
+        public JsonResult Get()
         {
-            return _cidadeRepositorio.GetCidades;
+            var resultado = new
+            {
+                Sucesso = 1,
+                Mensagem = "Adicionado com sucesso",
+                data = _cidadeRepositorio.GetCidades
+
+        };
+            return new JsonResult(resultado);
         }
 
         // GET api/<CidadeController>/5
@@ -30,24 +37,49 @@ namespace teste_emprego.Controllers
         {
             return "value";
         }
-
+        
         // POST api/<CidadeController>
         [HttpPost]
-        public void Post([FromBody] Cidade cidade)
+        public JsonResult Post([FromBody] Cidade cidade)
         {
-            _cidadeRepositorio.InserirCidade(cidade);
+           _cidadeRepositorio.InserirCidade(cidade); 
+            var resultado = new {
+                Sucesso = 1,
+                Mensagem = "Adicionado com sucesso"
+            }; 
+            return new JsonResult(resultado); 
+           
         }
 
         // PUT api/<CidadeController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public JsonResult Put([FromBody] Cidade cidade)
         {
+            _cidadeRepositorio.AlterarCidade(cidade);
+            var resultado = new
+            {
+                Sucesso = 1,
+                Mensagem = "Alterado com sucesso"
+
+            };
+            return new JsonResult(resultado);
         }
 
         // DELETE api/<CidadeController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public JsonResult Delete(Cidade cidade)
         {
+            
+            _cidadeRepositorio.DeletarCidade(cidade);
+            var resultado = new
+            {
+                Sucesso = 1,
+                Mensagem = "Deletado com sucesso"
+
+            };
+            return new JsonResult(resultado);
         }
+
+        
     }
 }
