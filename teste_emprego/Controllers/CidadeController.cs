@@ -11,34 +11,45 @@ namespace teste_emprego.Controllers
     public class CidadeController : ControllerBase
     {
 
-        private readonly CidadeRepositorio _cidadeRepositorio;
+        private CidadeRepositorio _cidadeRepositorio;
 
         public CidadeController() {
             _cidadeRepositorio = new CidadeRepositorio();
         }
 
         // GET: api/<CidadeController>
+        //[Route("api/[controller]/6GetAllCidades")]
         [HttpGet]
         public JsonResult Get()
         {
             var resultado = new
             {
                 Sucesso = 1,
-                Mensagem = "Adicionado com sucesso",
+                Mensagem = "Cidades encontradas",
                 data = _cidadeRepositorio.GetCidades
 
-        };
+            };
             return new JsonResult(resultado);
         }
 
         // GET api/<CidadeController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+       // [Route("api/[controller]/GetCidadesFiltro")]
+        [HttpGet("{nome}")]
+        public JsonResult Get([FromBody] Cidade cidade)
         {
-            return "value";
+            _cidadeRepositorio = new CidadeRepositorio(cidade);
+            var resultado = new
+            {
+                Sucesso = 1,
+                Mensagem = "Cidade(s) encontrada(s)",
+                data = _cidadeRepositorio.GetCidadesNome
+
+            };
+            return new JsonResult(resultado);
         }
-        
+
         // POST api/<CidadeController>
+       // [Route("api/[controller]/InsertCidade")]
         [HttpPost]
         public JsonResult Post([FromBody] Cidade cidade)
         {
@@ -52,7 +63,8 @@ namespace teste_emprego.Controllers
         }
 
         // PUT api/<CidadeController>/5
-        [HttpPut("{id}")]
+       // [Route("api/[controller]/UpdateCidade")]
+        [HttpPut("{id}")] 
         public JsonResult Put([FromBody] Cidade cidade)
         {
             _cidadeRepositorio.AlterarCidade(cidade);
@@ -66,7 +78,9 @@ namespace teste_emprego.Controllers
         }
 
         // DELETE api/<CidadeController>/5
+      //  [Route("api/[controller]/DeleteCidade")]
         [HttpDelete("{id}")]
+       
         public JsonResult Delete(Cidade cidade)
         {
             

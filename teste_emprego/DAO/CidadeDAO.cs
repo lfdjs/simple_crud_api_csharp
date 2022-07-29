@@ -50,6 +50,52 @@ namespace teste_emprego.DAO
             return null;
         }
 
+        public List<Cidade>? GetCidades(Cidade cidade)
+        {
+            List<Cidade> cidades = new List<Cidade>();
+            sql = "SELECT * FROM cidade WHERE nome like @nome";
+            try
+            {
+                if (conectar())
+                {
+
+                    using (SqlCommand cmd = new(sql, conexao))
+                    {
+                        cmd.CommandType = CommandType.Text;
+                        cmd.Parameters.AddWithValue("@nome", "%" + cidade.nome + "%");
+                        cmd.ExecuteNonQuery();
+                        using (SqlDataReader rdr = cmd.ExecuteReader())
+                     
+                        {
+                            if (rdr != null)
+                            {
+                                while (rdr.Read())
+                                {
+                                    var _cidade = new Cidade();
+                                    _cidade.id = (int)rdr["id"];
+                                   _cidade.nome = (string)rdr["nome"];
+                                    _cidade.uf = (string)rdr["uf"];
+                                    cidades.Add(_cidade);
+                                }
+                            }
+
+                        }
+                    }
+                    return cidades;
+                }
+            }
+            catch (Exception erro)
+            {
+
+                throw erro;
+            }
+            finally
+            {
+                desconectar();
+            }
+            return null;
+        }
+
         //Método de inserir as cidades
         public void InserirCidade(Cidade cidade) {
             sql = "INSERT INTO cidade (nome, uf) VALUES (@nome, @uf)";
@@ -79,8 +125,10 @@ namespace teste_emprego.DAO
            
         }
 
-        public void AlterarCidade(Cidade cidade)
+        public void AlterarCidade(int id, string nome)
         {
+           
+            
             sql = "UPDATE cidade SET nome = @nome WHERE id = @id";
             try
             {
@@ -90,8 +138,9 @@ namespace teste_emprego.DAO
                     using (SqlCommand cmd = new(sql, conexao))
                     {
                         cmd.CommandType = CommandType.Text;
-                        cmd.Parameters.AddWithValue("@nome", cidade.nome);
-                        cmd.Parameters.AddWithValue("@id", cidade.id);
+                        cmd.Parameters.AddWithValue("@nome", nome); 
+                       // cmd.Parameters.AddWithValue("@nome", cidade.nome);
+                        cmd.Parameters.AddWithValue("@id",id);
                         cmd.ExecuteNonQuery();
                     }
 
