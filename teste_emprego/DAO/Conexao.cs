@@ -6,7 +6,7 @@ using System.Data.SqlClient;
 
     public class Conexao
     {
-        private readonly string url = "Data Source=dbdemo.cmyxxu3ceill.sa-east-1.rds.amazonaws.com;Initial Catalog=ERI.SOU; User ID=admin; Password=movisis1";
+        private readonly string url = ""; //Coloque a string de conexao aqui
         protected string sql { get; set; }
 
         public SqlConnection? conexao;
